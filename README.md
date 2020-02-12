@@ -6,7 +6,7 @@ For instance if you have 3 plays for the movie **Guardians of the Galaxy** at th
 
  - 2014-08-01T20:00:00.000Z
  - 2017-05-05T22:00:00.000Z
- - 2017-02-05T22:00:00.000Z
+ - 2017-05-05T22:00:00.000Z
 
 The script will keep two : the first and the second. The third will be removed.
 If there are no duplicates the script do nothing.
