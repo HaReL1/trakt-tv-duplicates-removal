@@ -89,21 +89,44 @@ def remove_duplicate(history, type):
     print('Removing %s duplicates' % type)
 
     entry_type = 'movie' if type == 'movies' else 'episode'
-
-    entries = []
+    entry_type = 'episode'
+    entries = {}
     duplicates = []
+    duplicates_to_remove = []
+    temp_to_remove = []
 
-    for i in history[::-1]:
-        if i[entry_type]['ids']['trakt'] in entries:
-            duplicates.append(i['id'])
+    for ind, i in enumerate(history):
+        traktID = i[entry_type]['ids']['trakt'];
+        if traktID in entries:
+            entries[traktID].append(ind)
+            if traktID not in duplicates:
+                duplicates.append(traktID)
         else:
-            entries.append(i[entry_type]['ids']['trakt'])
+            entries[traktID] = [ind]
 
-    if len(duplicates) > 0:
-        print('%s %s duplicates plays to be removed' % (len(duplicates), type))
+    for i in duplicates:
+        for j in entries[i]:
+            for m in entries[i]:
+                if j == m:
+                    print('equal', j, m)
+                    continue
+                else:
+                    print('j, m', j, m)
+                    if history[j]['watched_at'] == history[m]['watched_at']:
+                        print(m, 'to be removed')
+                        duplicates_to_remove.append(history[entries[i][j]]['id'])
+                        temp_to_remove.append(m)
+                print('end iteration of inside loop', 'm=', m)
+            print('total end of inside loop', j, m)
+            for r in temp_to_remove:
+                entries[i].remove(r)
+            temp_to_remove = []
 
-        session.post(sync_history_url, json={'ids': duplicates})
-        print('%s %s duplicates successfully removed!' % (len(duplicates), type))
+    if len(duplicates_to_remove) > 0:
+        print('%s %s duplicates plays to be removed' % (len(duplicates_to_remove), type))
+
+        session.post(sync_history_url, json={'ids': duplicates_to_remove})
+        print('%s %s duplicates successfully removed!' % (len(duplicates_to_remove), type))
     else:
         print('No %s duplicates found' % type)
 
