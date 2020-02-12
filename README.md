@@ -1,14 +1,14 @@
 Trakt.tv duplicate / additionnal plays bulk removal  
 ===========  
-This script allows you to remove all the duplicate or additionnal plays for your trakt.tv movies or episodes, and just keep one play per movie / episode (the oldest one).
+This script allows you to remove all the duplicate or additionnal plays for your trakt.tv movies or episodes, and just keep one play per movie / episode with different date.
 
 For instance if you have 3 plays for the movie **Guardians of the Galaxy** at these dates:
 
  - 2014-08-01T20:00:00.000Z
  - 2017-05-05T22:00:00.000Z
- - 2018-02-05T21:00:00.000Z
+ - 2017-02-05T22:00:00.000Z
 
-The script will keep the oldest play (2014-08-01T20:00:00.000Z) and remove all the others.
+The script will keep two : the first and the second. The third will be removed.
 If there are no duplicates the script do nothing.
 The script backup your data in local json files (movies.json and episodes.json) before doing anything.
   
